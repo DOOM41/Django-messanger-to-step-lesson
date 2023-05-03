@@ -81,4 +81,3 @@ class Message(models.Model):
     def __str__(self) -> str:
         return f"[{self.datetime_send.strftime('%d %B - %H:%M:%S')}]\
             {self.sender} : {self.text}"
-

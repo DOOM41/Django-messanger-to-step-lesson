@@ -61,4 +61,3 @@ class ChatMessageViewSet(ViewSet):
                 'message': f"Message {serializer.validated_data.get('id')} is created"
             }
         )
-    

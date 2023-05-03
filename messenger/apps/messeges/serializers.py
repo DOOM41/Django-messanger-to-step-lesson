@@ -48,5 +48,3 @@ class ChatSerializer(serializers.Serializer):
             'name',
             'members',
         )
-
-        

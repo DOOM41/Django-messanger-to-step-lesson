@@ -10,4 +10,3 @@ from messeges.models import (
 
 admin.register(Chat)
 admin.register(Message)
-
