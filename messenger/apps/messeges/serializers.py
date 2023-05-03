@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 
 from messeges.models import Chat
 
-class UserSerializer(serializers.ModelSerializer):
 
+class UserSerializer(serializers.ModelSerializer):
+    """Serializer for User."""
+    
     class Meta:
         model = User
         fields = '__all__'
@@ -12,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class MessageSerializers(serializers.Serializer):
     """
-    Serializer for get all message field
+    Serializer for get all message field.
     """
 
     sender: User = UserSerializer()
@@ -32,6 +34,7 @@ class MessageSerializers(serializers.Serializer):
 
 
 class ChatSerializer(serializers.Serializer):
+    """Serializer for Chat."""
 
     owner = UserSerializer(required=False)
     is_many = serializers.BooleanField(read_only=True)
@@ -45,3 +48,5 @@ class ChatSerializer(serializers.Serializer):
             'name',
             'members',
         )
+
+        

@@ -18,7 +18,7 @@ from messeges.serializers import MessageSerializers, ChatSerializer
 
 class ChatMessageViewSet(ViewSet):
     """
-    ViewSet Chats
+    ViewSet Chats.
     """
 
     queryset: QuerySet[Message] = Message.objects.select_related(
@@ -61,3 +61,4 @@ class ChatMessageViewSet(ViewSet):
                 'message': f"Message {serializer.validated_data.get('id')} is created"
             }
         )
+    

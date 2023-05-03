@@ -2,12 +2,13 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractBaseUser
 
+
 User: AbstractBaseUser = get_user_model()
 
 
 class Chat(models.Model):
     """
-    Chat can be 1 people or group chat 
+    Chat can be 1 people or group chat.
     """
     owner: 'User' = models.ForeignKey(
         to=User,
@@ -78,4 +79,6 @@ class Message(models.Model):
         verbose_name_plural = "Messages"
 
     def __str__(self) -> str:
-        return f"[{self.datetime_send.strftime('%d %B - %H:%M:%S')}] {self.sender} : {self.text}"
+        return f"[{self.datetime_send.strftime('%d %B - %H:%M:%S')}]\
+            {self.sender} : {self.text}"
+
