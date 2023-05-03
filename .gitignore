@@ -13,3 +13,15 @@ media/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+lib/
+lib64/
+parts/
+sdist/
+var/
