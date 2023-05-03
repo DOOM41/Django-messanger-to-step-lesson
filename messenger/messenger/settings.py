@@ -2,6 +2,8 @@ from pathlib import Path
 import sys
 import os
 
+from .conf import * # noqa
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(BASE_DIR)
