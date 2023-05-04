@@ -14,6 +14,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'auths.CustomUser'
+
 PROJECTS_APPS = [
     'abstractions.apps.AbstractionsConfig',
     'messeges.apps.MessegesConfig',
@@ -65,10 +67,11 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 
 
 DATABASES = {
-    'default': {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "db",
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
