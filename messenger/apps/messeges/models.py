@@ -78,4 +78,5 @@ class Message(models.Model):
         verbose_name_plural = "Messages"
 
     def __str__(self) -> str:
-        return f"[{self.datetime_send.strftime('%d %B - %H:%M:%S')}] {self.sender} : {self.text}"
+        return f"[{self.datetime_send.strftime('%d %B - %H:%M:%S')}] \
+            {self.sender} : {self.to_send.name} : {self.text} "

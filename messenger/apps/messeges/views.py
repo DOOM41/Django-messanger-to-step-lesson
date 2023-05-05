@@ -14,6 +14,7 @@ from messeges.models import (
     Message
 )
 from messeges.serializers import MessageSerializers, ChatSerializer
+from messeges.utils import write_messages_to_excel
 
 
 class ChatMessageViewSet(ViewSet):
@@ -56,8 +57,10 @@ class ChatMessageViewSet(ViewSet):
             data=request.POST
         )
         serializer.is_valid(raise_exception=True)
+        write_messages_to_excel()
         return Response(
             {
                 'message': f"Message {serializer.validated_data.get('id')} is created"
             }
         )
+    

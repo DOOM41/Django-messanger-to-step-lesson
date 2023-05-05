@@ -4,3 +4,7 @@ from django.apps import AppConfig
 class MessegesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'messeges'
+
+    def ready(self):
+        import messeges.signals
+        
