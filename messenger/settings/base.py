@@ -19,6 +19,7 @@ AUTH_USER_MODEL = 'auths.CustomUser'
 PROJECTS_APPS = [
     'abstractions.apps.AbstractionsConfig',
     'messeges.apps.MessegesConfig',
+    'auths.apps.AuthsConfig',
 ]
 
 DJANGO_APPS = [

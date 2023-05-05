@@ -8,7 +8,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
     """
 
     email = models.EmailField(
-        verbose_name="почта/логин"
+        verbose_name="почта/логин", unique=True
     )
 
     USERNAME_FIELD = 'email'
