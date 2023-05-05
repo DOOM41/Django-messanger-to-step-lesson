@@ -5,6 +5,29 @@ from django.contrib.auth.models import AbstractBaseUser
 User: AbstractBaseUser = get_user_model()
 
 
+class ChatManager(models.Manager):
+    """
+    Manager for Chat model.
+    """
+    def get_all_chats(self):
+        return self.all()
+
+    def get_chat_by_id(self, chat_id):
+        try:
+            return self.get(id=chat_id)
+        except Chat.DoesNotExist:
+            return None
+    
+    def get_chat_by_owner_id(self, owner_id, chat_id):
+        try:
+            return self.get(owner_id=owner_id, id=chat_id)
+        except Chat.DoesNotExist:
+            return None
+    
+    def get_chats_by_owner(self, owner_id):
+        return self.filter(owner_id=owner_id)
+
+
 class Chat(models.Model):
     """
     Chat can be 1 people or group chat 
@@ -30,6 +53,8 @@ class Chat(models.Model):
         related_name="chats"
     )
 
+    objects = ChatManager()
+    
     class Meta:
         ordering = (
             '-id',
