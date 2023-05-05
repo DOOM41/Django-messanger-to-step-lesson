@@ -1,20 +1,23 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import (
+    include,
+    path,
+)
+
+from mesages.views import (
+    MessageViewSet,
+)
 
 from rest_framework.routers import DefaultRouter
 
-from messeges.views import ChatMessageViewSet
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls'))
-]
-
-router: DefaultRouter = DefaultRouter(
+router = DefaultRouter(
     trailing_slash=False
 )
-router.register('chat',ChatMessageViewSet)
 
-urlpatterns += [
-    path('api/', include(router.urls))
-]
+router.register('all-messages', MessageViewSet)
+
+urlpatterns = (
+    path('admin/', admin.site.urls),
+    path('api/v1/', include(router.urls))
+)
