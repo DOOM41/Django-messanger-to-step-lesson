@@ -19,8 +19,6 @@ class ObjectMixin:
         except Exception as exc:
             print(f'ERROR.ObjectMixin.get_object: {exc}')
             return None
-        else:
-            return obj
 
 
 class ResponseMixin:
