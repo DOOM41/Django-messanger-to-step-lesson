@@ -1,11 +1,5 @@
-# Python
-from typing import (
-    Optional,
-    Iterable
-)
-import random
-
 # Django
+from typing import Iterable, Optional
 from django.db import models
 from django.contrib.auth.models import (
     AbstractUser,
@@ -17,7 +11,9 @@ from django.core.exceptions import ValidationError
 
 
 class CustomUserManager(BaseUserManager):
-    """ClientManager."""
+    """
+    User Manager.
+    """
 
     def create_user(
         self,
@@ -41,7 +37,6 @@ class CustomUserManager(BaseUserManager):
         email: str,
         password: str
     ) -> 'CustomUser':
-
         custom_user: 'CustomUser' = self.model(
             email=self.normalize_email(email),
             password=password
@@ -65,14 +60,20 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(
-    AbstractUser, 
-    PermissionsMixin,
+    AbstractUser,
+    PermissionsMixin
 ):
-    """My custom user."""
+    """
+    Custom User.
+    """
 
     email = models.EmailField(
         verbose_name='email',
         unique=True
+    )
+    password = models.CharField(
+        verbose_name='password',
+        max_length=100
     )
     first_name = models.CharField(
         verbose_name='firstname',
@@ -98,7 +99,10 @@ class CustomUser(
         verbose_name='active',
         default=False
     )
-    
+    is_verified = models.BooleanField(
+        verbose_name='verifed',
+        default=False
+    )
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -109,6 +113,5 @@ class CustomUser(
         verbose_name = 'user'
         verbose_name_plural = 'users'
 
-    def save(self, *args: tuple, **kwargs: dict) -> None:
-        self.full_clean()
-        return super().save(*args, **kwargs)
+    def save(self, *args, **kwargs) -> None:
+        return super().save(*args , **kwargs)
