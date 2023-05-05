@@ -1,6 +1,7 @@
 from pathlib import Path
 import sys
 import os
+from .conf import * # noqa
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,7 +13,7 @@ SECRET_KEY = 'django-insecure-3xfjxgw&rv&%7jvk766phjz0c(fyxof)p+v37n0x)51)yrqxgy
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'auths.CustomUser'
 
@@ -29,7 +30,6 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework'
 ]
 
