@@ -15,7 +15,6 @@ class MessageSerializers(serializers.Serializer):
     Serializer for get all message field
     """
 
-    sender: User = UserSerializer()
     to_send: Chat = serializers.PrimaryKeyRelatedField(
         queryset = Chat.objects.all()
     )
