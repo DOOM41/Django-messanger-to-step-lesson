@@ -66,6 +66,7 @@ class CustomUser(
     """
     Custom User.
     """
+    
 
     email = models.EmailField(
         verbose_name='email',
