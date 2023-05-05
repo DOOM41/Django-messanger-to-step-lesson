@@ -49,6 +49,7 @@ class ChatMessageViewSet(ViewSet):
             serializer = MessageSerializers(
                 self.queryset, many=True
             )
+            # write_messages_to_excel(messages=serializer.data)
             return Response(
                 serializer.data,
                 status=200
@@ -57,10 +58,16 @@ class ChatMessageViewSet(ViewSet):
             data=request.POST
         )
         serializer.is_valid(raise_exception=True)
-        write_messages_to_excel()
         return Response(
             {
                 'message': f"Message {serializer.validated_data.get('id')} is created"
             }
         )
     
+    @action(
+        methods=['GET'],
+        detail=False
+    )
+    def create_report(self, request: Request) -> Response:
+        write_messages_to_excel(messages=self.queryset.all())
+        return Response({'success' : 'report_create'})

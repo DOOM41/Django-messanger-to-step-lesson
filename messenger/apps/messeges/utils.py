@@ -32,4 +32,3 @@ def write_messages_to_excel(messages):
     
     workbook.save(filename)
     print('Ну шо народ погнали ...')
-    
