@@ -5,7 +5,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 
 # Sentry
-if settings.DEBUG:
+if not settings.DEBUG:
     sentry_sdk.init(
         dsn="https://cebc4b414ade4f69a4cc6ee94788ddac@o4505120608944128.ingest.sentry.io/4505120612220928",  # noqa
         integrations=[
