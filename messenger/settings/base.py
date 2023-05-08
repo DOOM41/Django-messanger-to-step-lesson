@@ -1,6 +1,7 @@
 from pathlib import Path
 import sys
 import os
+from .conf import * # noqa
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -16,11 +17,14 @@ SECRET_KEY = 'django-insecure-3xfjxgw&rv&%7jvk766phjz0c(fyxof)p+v37n0x)51)yrqxgy
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+AUTH_USER_MODEL = 'auths.CustomUser'
 
 PROJECTS_APPS = [
     'abstractions.apps.AbstractionsConfig',
     'messeges.apps.MessegesConfig',
+    'auths.apps.AuthsConfig',
 ]
 
 DJANGO_APPS = [
@@ -30,7 +34,6 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework'
 ]
 
@@ -69,10 +72,11 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 
 
 DATABASES = {
-    'default': {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "db",
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
