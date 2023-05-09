@@ -9,17 +9,17 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
 from django.dispatch import receiver
 
-from mesages.mixins import (
+from messeges.mixins import (
     ResponseMixin,
     ObjectMixin,
 )
-from mesages.models import (
+from messeges.models import (
     Message,
     Chat,
     User
 )
-from mesages.serializers import (
-    MessageSerializer,
+from messeges.serializers import (
+    MessageSerializers,
     ChatSerializer,
     UserSerializer
 )
@@ -35,7 +35,7 @@ class MessageViewSet(ResponseMixin, ObjectMixin, ViewSet):
     def list(self, request: Request, *args: Any) -> Response:
         """GET method."""
 
-        serializer: MessageSerializer = MessageSerializer(
+        serializer: MessageSerializers = MessageSerializers(
             self.queryset, many=True
         )
 
@@ -48,7 +48,7 @@ class MessageViewSet(ResponseMixin, ObjectMixin, ViewSet):
         """GET method to retrieve a single message by ID."""
 
         message: Message = get_object_or_404(self.queryset, pk=pk)
-        serializer: MessageSerializer = MessageSerializer(message)
+        serializer: MessageSerializers = MessageSerializers(message)
 
         return Response(
             data=serializer.data
