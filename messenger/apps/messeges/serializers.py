@@ -19,14 +19,14 @@ class MessageSerializers(serializers.Serializer):
         queryset = Chat.objects.all()
     )
     text = serializers.CharField()
-    datetime = serializers.DateTimeField()
+    datetime_send = serializers.DateTimeField()
 
     class Meta():
         fields = (
             'sender',
             'to_send',
             'text',
-            'datetime',
+            'datetime_send',
         )
 
 
