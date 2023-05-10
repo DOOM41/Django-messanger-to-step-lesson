@@ -1,4 +1,6 @@
 # Django
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.shortcuts import render
 from django.db.models.query import QuerySet
 
@@ -14,6 +16,7 @@ from messeges.models import (
     Message
 )
 from messeges.serializers import MessageSerializers, ChatSerializer
+import datetime
 
 
 class ChatMessageViewSet(ViewSet):
@@ -29,7 +32,7 @@ class ChatMessageViewSet(ViewSet):
         methods=['GET'],
         detail=False
     )
-    def list_chats(self, request: Request, *args: tuple) -> Response:
+    def list_chats(self, request: Request, args: tuple) -> Response:
         chats = [message.to_send for message in self.queryset]
         serializer = ChatSerializer(
             chats, many=True
@@ -43,7 +46,7 @@ class ChatMessageViewSet(ViewSet):
         methods=['GET', 'POST'],
         detail=False
     )
-    def list_messages(self, request: Request, *args: tuple) -> Response:
+    def list_messages(self, request: Request,args: tuple) -> Response:
         if request.method == "GET":
             serializer = MessageSerializers(
                 self.queryset, many=True
@@ -56,8 +59,15 @@ class ChatMessageViewSet(ViewSet):
             data=request.POST
         )
         serializer.is_valid(raise_exception=True)
+        serializer.save() 
         return Response(
             {
-                'message': f"Message {serializer.validated_data.get('id')} is created"
+                'message': f"Сообщение {serializer.validated_data.get('id')} создано"
             }
         )
+
+@receiver(post_save, sender=Message)
+def add_message_timestamp(sender, instance, created, **kwargs):
+    if created:
+        instance.timestamp = datetime.datetime.now()
+        instance.save()
