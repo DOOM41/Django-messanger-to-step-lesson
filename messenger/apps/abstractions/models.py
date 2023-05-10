@@ -1,8 +1,8 @@
 from typing import Optional
 
 from django.db import models
-from django.utils import timezone
 from django.db.models import QuerySet
+from django.utils import timezone
 
 
 class AbstractQuerySet(models.QuerySet):
@@ -39,13 +39,12 @@ class AbstractManager(models.Manager):
         except:
             return None
 
-    
-
 
 class AbstractDateTimeModel(models.Model):
     """Abstract model.
     
-    For desription all custom models."""
+    For desription all custom models
+    """
 
     datetime_created = models.DateTimeField(
         verbose_name="время создание",

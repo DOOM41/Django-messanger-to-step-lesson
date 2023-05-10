@@ -1,6 +1,9 @@
-from django.db import models
+from typing import Any
+
+from abstractions.models import AbstractDateTimeModel
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractBaseUser
+from django.db import models
 
 User: AbstractBaseUser = get_user_model()
 
@@ -29,9 +32,8 @@ class ChatManager(models.Manager):
 
 
 class Chat(models.Model):
-    """
-    Chat can be 1 people or group chat 
-    """
+    """Chat can be 1 people or group chat."""
+
     owner: 'User' = models.ForeignKey(
         to=User,
         related_name="own_chats",
@@ -54,7 +56,7 @@ class Chat(models.Model):
     )
 
     objects = ChatManager()
-    
+
     class Meta:
         ordering = (
             '-id',
@@ -70,9 +72,10 @@ class Chat(models.Model):
 
 
 class Message(models.Model):
-    """
-    Messege between users.
-    """
+    """Messege between users."""
+
+    CENSORED_PLACEHOLDER: str = 'CENSORED'
+
     sender: "User" = models.ForeignKey(
         to=User,
         related_name='messeges',
@@ -102,5 +105,43 @@ class Message(models.Model):
         verbose_name = "Message"
         verbose_name_plural = "Messages"
 
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        normalized_text: list[str] = self.text.lower().split(' ')
+
+        for bword in BannedWord.objects.all():
+            normalized_bword: str = bword.value.lower()
+
+            word: str
+            for word in normalized_text:
+                if word != normalized_bword:
+                    continue
+
+                self.text = self.text.lower().replace(
+                    word,
+                    self.CENSORED_PLACEHOLDER
+                )
+        super().save(*args, **kwargs)
+
     def __str__(self) -> str:
         return f"[{self.datetime_send.strftime('%d %B - %H:%M:%S')}] {self.sender} : {self.text}"
+
+
+class BannedWord(AbstractDateTimeModel):
+    """BannedWord.
+
+    Модель для хранения запрещенного слова
+    """
+
+    value: str = models.CharField(
+        max_length=100,
+    )
+
+    class Meta:
+        ordering = (
+            '-id',
+        )
+        verbose_name = 'Banned word'
+        verbose_name_plural = 'Banned words'
+
+    def __str__(self) -> str:
+        return f'BannedWord: {self.datetime_created}'

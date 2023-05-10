@@ -1,12 +1,9 @@
-from django.db import models
-from django.contrib.auth.models import (
-    AbstractUser, 
-    PermissionsMixin,
-    BaseUserManager
-)
-from django.core.exceptions import ValidationError
-
 from decouple import config
+from django.contrib.auth.models import (AbstractUser, BaseUserManager,
+                                        PermissionsMixin)
+from django.core.exceptions import ValidationError
+from django.db import models
+
 
 class CustomUserManager(BaseUserManager):
     """ClientManager."""

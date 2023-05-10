@@ -1,12 +1,11 @@
-from pathlib import Path
-import sys
 import os
-from .conf import * # noqa
+import sys
+from pathlib import Path
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-
+from .conf import *  # noqa
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(BASE_DIR)
@@ -70,14 +69,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'settings.wsgi.application'
 
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": "db",
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -95,16 +92,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'ASIA/ALMATY'
+TIME_ZONE = 'Asia/Almaty'
 
 USE_I18N = True
 
 USE_TZ = True
-
-
 
 STATIC_URL = 'static/'
 
