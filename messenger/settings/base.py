@@ -5,6 +5,7 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from messenger.settings import *
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,7 +17,7 @@ SECRET_KEY = 'django-insecure-3xfjxgw&rv&%7jvk766phjz0c(fyxof)p+v37n0x)51)yrqxgy
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 PROJECTS_APPS = [
     'abstractions.apps.AbstractionsConfig',
@@ -31,7 +32,8 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework'
+    'rest_framework',
+    'django_celery_results',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECTS_APPS
@@ -70,6 +72,8 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -94,7 +98,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'ASIA/ALMATY'
+TIME_ZONE = 'Asia/Almaty'
 
 USE_I18N = True
 
@@ -107,20 +111,24 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Celery
+CELERY_TIMEZONE = "Asia/Almaty"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
 
-# Sentry
-sentry_sdk.init(
-    dsn="https://cebc4b414ade4f69a4cc6ee94788ddac@o4505120608944128.ingest.sentry.io/4505120612220928",
-    integrations=[
-        DjangoIntegration(),
-    ],
+# # Sentry
+# sentry_sdk.init(
+#     dsn="https://cebc4b414ade4f69a4cc6ee94788ddac@o4505120608944128.ingest.sentry.io/4505120612220928",
+#     integrations=[
+#         DjangoIntegration(),
+#     ],
 
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
+#     # Set traces_sample_rate to 1.0 to capture 100%
+#     # of transactions for performance monitoring.
+#     # We recommend adjusting this value in production.
+#     traces_sample_rate=1.0,
 
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
+#     # If you wish to associate users to errors (assuming you are using
+#     # django.contrib.auth) you may enable sending PII data.
+#     send_default_pii=True
+# )
