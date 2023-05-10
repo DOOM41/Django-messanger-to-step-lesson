@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
 )
 from django.core.exceptions import ValidationError
 
+from decouple import config
 
 class CustomUserManager(BaseUserManager):
     """ClientManager."""
@@ -47,10 +48,10 @@ class CustomUserManager(BaseUserManager):
     def create_test_user(self) -> 'CustomUser':
 
         custom_user: 'CustomUser' = self.model(
-            email=self.normalize_email('root2@gmail.com'),
-            password='qwerty'
+            email=self.normalize_email(config('EMAIL_TEST_USER', cast=str)),
+            password=config('PASSWORD_TEST_USER', cast=str)
         )
-        custom_user.set_password('qwerty')
+        custom_user.set_password(config('PASSWORD_TEST_USER', cast=str))
         custom_user.save(using=self._db)
         return custom_user
 
