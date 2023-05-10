@@ -123,7 +123,10 @@ class Message(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
-        return f"[{self.datetime_send.strftime('%d %B - %H:%M:%S')}] {self.sender} : {self.text}"
+        return (
+            f'[{self.datetime_send.strftime("%d %B - %H:%M:%S")}]'
+            f'{self.sender} : {self.text}'
+        )
 
 
 class BannedWord(AbstractDateTimeModel):
