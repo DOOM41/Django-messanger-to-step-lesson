@@ -4,6 +4,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from messeges.views import ChatMessageViewSet
+from auths.views import VerifyView
 
 
 def trigger_error(request):
@@ -13,12 +14,14 @@ def trigger_error(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('sentry-debug/', trigger_error)
+    path('sentry-debug/', trigger_error),
+    path('api/verificate', VerifyView.as_view()),
 ]
 
 router: DefaultRouter = DefaultRouter(
     trailing_slash=False
 )
+
 router.register('chat',ChatMessageViewSet)
 
 urlpatterns += [

@@ -20,7 +20,8 @@ class CustomUserAdmin(UserAdmin):
             'fields': (
                 'email',
                 'password',
-                'count_requests'
+                'is_verifed',
+                'verify_code'
             )
         }),
         ('Permissions', {

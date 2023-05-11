@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import (
-    AbstractUser, 
+    AbstractBaseUser,
     PermissionsMixin,
     BaseUserManager
 )
 from django.core.exceptions import ValidationError
 
 from decouple import config
+
 
 class CustomUserManager(BaseUserManager):
     """ClientManager."""
@@ -56,10 +57,12 @@ class CustomUserManager(BaseUserManager):
         return custom_user
 
 
-class CustomUser(AbstractUser, PermissionsMixin):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
     Custom user model.
     """
+
+    VERIFY_CODE_SIZE = 40
 
     email = models.EmailField(
         verbose_name="почта/логин",
@@ -69,11 +72,28 @@ class CustomUser(AbstractUser, PermissionsMixin):
         verbose_name='verifed',
         default=False
     )
+    verify_code = models.CharField(
+        verbose_name='верификационный код',
+        max_length=VERIFY_CODE_SIZE
+    )
+    is_active = models.BooleanField(
+        verbose_name='активный пользователь',
+        default=True
+    )
+    is_staff = models.BooleanField(
+        verbose_name='штатный сотрудник',
+        default=False
+    )
+    is_superuser = models.BooleanField(
+        verbose_name='администратор',
+        default=False
+    )
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
+
     class Meta:
         ordering = (
             '-id',
