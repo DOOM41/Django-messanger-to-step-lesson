@@ -6,6 +6,7 @@ from .conf import * # noqa
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from decouple import config
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -132,5 +133,5 @@ sentry_sdk.init(
 
 # Celery
 
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_BROKER_URL = config('CELERY_BROKER_URL', cast=str)
+CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', cast=str)

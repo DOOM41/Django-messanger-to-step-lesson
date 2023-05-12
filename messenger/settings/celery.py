@@ -23,7 +23,12 @@ app.config_from_object(
     'django.conf:settings', namespace='CELERY'
 )
 app.autodiscover_tasks(
-    lambda: settings.PROJECT_APPS
+    lambda: settings.PROJECTS_APPS
 )
+
+
+# @app.task                  # test tasks
+# def add(x, y):
+#     return x / y  
 
 app.conf.timezone = settings.TIME_ZONE
