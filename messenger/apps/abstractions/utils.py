@@ -1,20 +1,29 @@
 import requests
 import datetime
+import decouple
 
 
 def get_current_time_by_city_name(city_name: str) -> datetime.datetime:
     URL: str = ('https://api.api-ninjas.com/v1/worldtime?'
                 f'city={city_name}')
-    headers = {'X-Api-Key': 'f7xVZFQ//LSeJ1ym1TGgSw==hlohz1xQ8LzSqXPc'}
+    API_TOKEN: str = decouple.config('CITY_TIME_API_TOKEN', cast=str)
+    headers: dict[str, str] = {'X-Api-Key': API_TOKEN}
     r: requests.Response = requests.get(url=URL, headers=headers)
-    data = r.json()
+    # Check if response status code is 200
+    status: int = r.status_code
+    if status != 200:
+        return {'error': status}
+    # Get data from response and check if there any errors
+    data: dict = r.json()
     if data.get('error'):
-        return
-    time = datetime.datetime(
+        return data
+    # Create datetime variable to return
+    time: datetime.datetime = datetime.datetime(
         year=int(data.get('year')),
         month=int(data.get('month')),
         day=int(data.get('day')),
         hour=int(data.get('hour')),
         minute=int(data.get('minute')),
-        second=int(data.get('second')))
+        second=int(data.get('second'))
+    )
     return time
