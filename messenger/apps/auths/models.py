@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import (
     AbstractUser, 
@@ -68,6 +70,17 @@ class CustomUser(AbstractUser, PermissionsMixin):
     is_verifed = models.BooleanField(
         verbose_name='verifed',
         default=False
+    )
+    unique_id = models.UUIDField(
+        verbose_name='уникальный идентификатор',
+        default=uuid.uuid4,
+        editable=False,
+        unique=True
+    )
+    nickname = models.CharField(
+        verbose_name='никнейм',
+        max_length=255,
+        unique=False
     )
 
     USERNAME_FIELD = 'email'
