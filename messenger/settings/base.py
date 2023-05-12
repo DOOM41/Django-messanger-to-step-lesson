@@ -25,6 +25,7 @@ PROJECTS_APPS = [
     'abstractions.apps.AbstractionsConfig',
     'messeges.apps.MessegesConfig',
     'auths.apps.AuthsConfig',
+    'create_favorite_chat.apps.CreateFavoriteChatConfig'
 ]
 
 DJANGO_APPS = [
