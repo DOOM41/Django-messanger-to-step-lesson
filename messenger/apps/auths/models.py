@@ -65,6 +65,11 @@ class CustomUser(AbstractUser, PermissionsMixin):
         verbose_name="почта/логин",
         unique=True
     )
+    username = models.CharField(
+        verbose_name="username",
+        max_length=150,
+        unique=True
+    )
     is_verifed = models.BooleanField(
         verbose_name='verifed',
         default=False
