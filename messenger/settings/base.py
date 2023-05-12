@@ -132,6 +132,5 @@ sentry_sdk.init(
 
 
 # Celery
-
 CELERY_BROKER_URL = config('CELERY_BROKER_URL', cast=str)
 CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', cast=str)

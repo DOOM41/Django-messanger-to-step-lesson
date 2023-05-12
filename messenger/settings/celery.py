@@ -31,4 +31,5 @@ app.autodiscover_tasks(
 # def add(x, y):
 #     return x / y  
 
+
 app.conf.timezone = settings.TIME_ZONE
