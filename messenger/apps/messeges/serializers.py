@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
 
 from messeges.models import Chat
+from auths.models import CustomUser
 
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = '__all__'
 
 
@@ -15,7 +15,7 @@ class MessageSerializers(serializers.Serializer):
     Serializer for get all message field
     """
 
-    sender: User = UserSerializer()
+    sender: CustomUser = UserSerializer()
     to_send: Chat = serializers.PrimaryKeyRelatedField(
         queryset = Chat.objects.all()
     )
