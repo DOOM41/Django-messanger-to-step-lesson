@@ -2,6 +2,7 @@ from pathlib import Path
 import sys
 import os
 from .conf import * # noqa
+import decouple
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -110,6 +111,8 @@ STATIC_URL = 'static/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+API_TOKEN: str = decouple.config('CITY_TIME_API_TOKEN', cast=str)
 
 
 # Sentry
