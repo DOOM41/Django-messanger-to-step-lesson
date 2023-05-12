@@ -5,5 +5,5 @@ from messeges.models import (
     Message
 )
 
-admin.register(Chat)
-admin.register(Message)
+admin.site.register(Chat)
+admin.site.register(Message)

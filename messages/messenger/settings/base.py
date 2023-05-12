@@ -7,7 +7,6 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(BASE_DIR)
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
@@ -19,12 +18,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-AUTH_USER_MODEL = 'auths.CustomUser'
+# AUTH_USER_MODEL = 'auths.CustomUser'
 
 PROJECTS_APPS = [
-    'abstractions.apps.AbstractionsConfig',
     'messeges.apps.MessegesConfig',
-    'auths.apps.AuthsConfig',
+    'abstractions.apps.AbstractionsConfig',
+    # 'auths.apps.AuthsConfig',
 ]
 
 DJANGO_APPS = [
@@ -74,7 +73,7 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "db",
+        "NAME": "db.sqlite3",
     }
 }
 
@@ -98,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'ASIA/ALMATY'
+TIME_ZONE = 'Asia/Almaty'
 
 USE_I18N = True
 
@@ -112,19 +111,19 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Sentry
-sentry_sdk.init(
-    dsn="https://cebc4b414ade4f69a4cc6ee94788ddac@o4505120608944128.ingest.sentry.io/4505120612220928",
-    integrations=[
-        DjangoIntegration(),
-    ],
+# # Sentry
+# sentry_sdk.init(
+#     dsn="https://cebc4b414ade4f69a4cc6ee94788ddac@o4505120608944128.ingest.sentry.io/4505120612220928",
+#     integrations=[
+#         DjangoIntegration(),
+#     ],
 
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
+#     # Set traces_sample_rate to 1.0 to capture 100%
+#     # of transactions for performance monitoring.
+#     # We recommend adjusting this value in production.
+#     traces_sample_rate=1.0,
 
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
+#     # If you wish to associate users to errors (assuming you are using
+#     # django.contrib.auth) you may enable sending PII data.
+#     send_default_pii=True
+# )

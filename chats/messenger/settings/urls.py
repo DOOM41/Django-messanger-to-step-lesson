@@ -3,7 +3,7 @@ from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 
-from messeges.views import ChatMessageViewSet
+from messeges.views import ChatViewSet
 
 
 def trigger_error(request):
@@ -19,7 +19,7 @@ urlpatterns = [
 router: DefaultRouter = DefaultRouter(
     trailing_slash=False
 )
-router.register('chat',ChatMessageViewSet)
+router.register('chat',ChatViewSet)
 
 urlpatterns += [
     path('api/', include(router.urls))

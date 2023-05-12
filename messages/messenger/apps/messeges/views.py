@@ -10,34 +10,17 @@ from rest_framework.decorators import action
 
 # Local
 from messeges.models import (
-    Chat,
     Message
 )
 from messeges.serializers import MessageSerializers, ChatSerializer
 
 
-class ChatMessageViewSet(ViewSet):
+class MessageViewSet(ViewSet):
     """
-    ViewSet Chats
+    ViewSet Messages
     """
 
-    queryset: QuerySet[Message] = Message.objects.select_related(
-        'to_send'
-    ).all()
-
-    @action(
-        methods=['GET'],
-        detail=False
-    )
-    def list_chats(self, request: Request, *args: tuple) -> Response:
-        chats = [message.to_send for message in self.queryset]
-        serializer = ChatSerializer(
-            chats, many=True
-        )
-        return Response(
-            serializer.data,
-            status=200
-        )
+    queryset: QuerySet[Message] = Message.objects.all()
 
     @action(
         methods=['GET', 'POST'],
