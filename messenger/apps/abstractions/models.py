@@ -39,8 +39,6 @@ class AbstractManager(models.Manager):
         except:
             return None
 
-    
-
 
 class AbstractDateTimeModel(models.Model):
     """Abstract model.
@@ -64,3 +62,24 @@ class AbstractDateTimeModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class IncorrectUserName(models.Model):
+    """IncorrectUserName.
+
+    Модель для хранения некорректных имен пользователя
+    """
+
+    value: str = models.CharField(
+        max_length=100,
+    )
+
+    class Meta:
+        ordering = (
+            '-id',
+        )
+        verbose_name = 'Incorrect user name'
+        verbose_name_plural = 'Incorrect user names'
+
+    def __str__(self) -> str:
+        return f'Incorrect user name: {self.value}'
