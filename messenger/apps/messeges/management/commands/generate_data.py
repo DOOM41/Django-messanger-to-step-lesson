@@ -1,14 +1,14 @@
 # Python
+import uuid
+import random
 from typing import Any
-from datetime import datetime, timedelta
-from requests.models import Response
+from datetime import timedelta
+from random import randint
 
 # Django
 from django.core.management.base import BaseCommand
-from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from random import randint, choice
 
 # Local
 from messeges.models import (
@@ -28,18 +28,20 @@ class Command(BaseCommand):
     def generate_users(self) -> None:
         User = get_user_model()
         for i in range(10):
-            email = f'user_{i}@gmail.com'
+            username = str(uuid.uuid4())[:8]
+            email = f'{username}@example.com'
+            password = 'password'
             user = User.objects.create_user(
-                email=email, password='password')
-
-            print(f'Created user number: {i} ')
+                email=email, password=password)
+            print(f'Created user with ID: {user.id}')
 
     def generate_chats_and_messages(self):
         User = get_user_model()
         random_object = User.objects.order_by('?').first()
         # Generate Chats
-        for _ in range(5):
-            chat = Chat.objects.create(owner=random_object, name=f"Chat{_}")
+        for i in range(5):
+            chat = Chat.objects.create(
+                owner=random_object, name=f"Chat{i}", is_many=random.choice([True, False]))
             # Generate Messages for each Chat
             for _ in range(10):
                 sender = random_object
@@ -48,7 +50,7 @@ class Command(BaseCommand):
                 message = Message.objects.create(
                     sender=sender, to_send=chat, text=text, datetime_send=datetime_send)
 
-            print(f'Created Chat with ID: {chat.id} and Messages')
+            print(f'Created Chat and Messages with ID: {chat.id}')
 
     def handle(self, *args: Any, **kwargs: Any) -> None:
         self.generate_users()
