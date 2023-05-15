@@ -79,6 +79,11 @@ class CustomUser(AbstractUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
+    
+    def save(self, *args, **kwargs):
+        self.username = self.email
+        super().save(*args, **kwargs)
+        
     class Meta:
         ordering = (
             '-id',
