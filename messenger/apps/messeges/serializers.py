@@ -31,17 +31,29 @@ class MessageSerializers(serializers.Serializer):
         )
 
 
-class ChatSerializer(serializers.Serializer):
-
+class SingleChatSerializer(serializers.Serializer):
     owner = UserSerializer(required=False)
-    is_many = serializers.BooleanField(read_only=True)
+    is_many = serializers.BooleanField(default=False, read_only=True)
+    member = UserSerializer()
+
+    class Meta:
+        fields = (
+            'owner',
+            'is_many', 
+            'member'
+        )
+
+
+class GroupChatSerializer(serializers.Serializer):
+    owner = UserSerializer(required=False)
+    is_many = serializers.BooleanField(default=True, read_only=True)
     name = serializers.CharField()
     members = UserSerializer(many=True)
 
     class Meta:
         fields = (
-            'owner',
-            'is_many',
-            'name',
-            'members',
+            'owner', 
+            'is_many', 
+            'name', 
+            'members'
         )
