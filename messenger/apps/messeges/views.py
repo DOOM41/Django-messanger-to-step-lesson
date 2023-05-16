@@ -13,10 +13,10 @@ from messeges.models import (
     Chat,
     Message
 )
-from messeges.serializers import MessageSerializers, ChatSerializer
+from messeges.serializers import MessageSerializers, SingleChatSerializer, GroupChatSerializer
 
 
-class ChatMessageViewSet(ViewSet):
+class ChatViewSet(ViewSet):
     """
     ViewSet Chats
     """
@@ -31,14 +31,21 @@ class ChatMessageViewSet(ViewSet):
     )
     def list_chats(self, request: Request, *args: tuple) -> Response:
         chats = [message.to_send for message in self.queryset]
-        serializer = ChatSerializer(
+        serializer = SingleChatSerializer(
             chats, many=True
         )
         return Response(
             serializer.data,
             status=200
         )
-
+    
+    def get_serializer_class(self):
+        if self.action == 'create' and self.request.data.get('is_many') == False:
+            return SingleChatSerializer
+        return GroupChatSerializer
+    
+    
+class MessageViewSet(ViewSet):
     @action(
         methods=['GET', 'POST'],
         detail=False

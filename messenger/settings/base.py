@@ -1,7 +1,6 @@
 from pathlib import Path
 import sys
 import os
-from .conf import * # noqa
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -19,12 +18,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-AUTH_USER_MODEL = 'auths.CustomUser'
-
 PROJECTS_APPS = [
     'abstractions.apps.AbstractionsConfig',
     'messeges.apps.MessegesConfig',
-    'auths.apps.AuthsConfig',
+    'posts.apps.PostsConfig'
 ]
 
 DJANGO_APPS = [
@@ -34,6 +31,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework'
 ]
 
@@ -72,11 +70,12 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "db",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -98,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'ASIA/ALMATY'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -106,7 +105,13 @@ USE_TZ = True
 
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
